@@ -1,15 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { getApiConfiguration } from './store/homeSlice';
-import Home from './pages/home/Home';
-import Detail from './pages/details/Detail';
-import SearchResult from './pages/searchResult/SearchResult';
-import PageNotFound from './pages/pageNotFound/PageNotFound';
-import Explore from './pages/explore/Explore';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import { fetchDataFromApi } from './utils/api';
+import { Suspense } from 'react';
+import { publicRoute } from './routes';
 
 function App() {
 
@@ -35,17 +32,25 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/:mediaType/:id' element={<Detail />} />
-        <Route path='/search/:query' element={<SearchResult />} />
-        <Route path='/explore/:mediaType' element={<Explore />} />
-        <Route path='*' element={<PageNotFound />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <Router>
+      <Suspense fallback={<div>Loading....</div>}>
+        <Header />
+        <Routes>
+          {publicRoute.map((route, index) => {
+            const Page = route.component;
+            return (
+              <Route key={index} path={route.path} element={<Page />} />
+            )
+          })}
+          {/* <Route path='/' element={<Home />} />
+          <Route path='/:mediaType/:id' element={<Detail />} />
+          <Route path='/search/:query' element={<SearchResult />} />
+          <Route path='/explore/:mediaType' element={<Explore />} />
+          <Route path='*' element={<PageNotFound />} /> */}
+        </Routes>
+        <Footer />
+      </Suspense>
+    </Router>
   );
 }
 

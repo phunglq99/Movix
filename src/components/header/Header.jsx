@@ -16,9 +16,13 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location])
+
     const controlNavbar = () => {
-        if(window.scrollY > 200) {
-            if(window.scrollY > lastScrollY && !mobileMenu) {
+        if (window.scrollY > 200) {
+            if (window.scrollY > lastScrollY && !mobileMenu) {
                 setShow("hide");
             } else {
                 setShow("show");
@@ -34,7 +38,7 @@ const Header = () => {
         return () => {
             window.removeEventListener("scroll", controlNavbar);
         }
-    },[lastScrollY])
+    }, [lastScrollY])
 
 
     const searchQueryHandle = (e) => {
@@ -74,9 +78,12 @@ const Header = () => {
                 <li className="menuItem" onClick={() => { navigationHandler("movie") }}>Movies</li>
                 <li className="menuItem" onClick={() => { navigationHandler("tv") }}>TV Shows</li>
                 <li className="menuItem">
-                    <HiOutlineSearch onClick={openSearch} />
+                    <button type="button">Log in</button>
+                    <button type="button">Sign up</button>
                 </li>
             </ul>
+
+            {/* mobile */}
             <div className="mobileMenuItems">
                 <HiOutlineSearch onClick={openSearch} />
                 {mobileMenu ? <VscChromeClose onClick={() => { setMobileMenu(false) }} /> : <SlMenu onClick={openMobileMenu} />}

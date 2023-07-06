@@ -15,11 +15,11 @@ export default function HeroBanner() {
     const { url } = useSelector((state) => state.home);
 
     const { data, loading } = useFetch("/movie/upcoming")
-    console.log(loading);
+    console.log(data);
 
 
     useEffect(() => {
-        const bg = url?.backdrop + data?.results?.[Math.floor(Math.random() * 20)].backdrop_path
+        const bg = url?.backdrop + data?.results?.[Math.floor(Math.random() * 20)].backdrop_path;
         setBackground(bg)
     }, [data])
 
@@ -36,9 +36,7 @@ export default function HeroBanner() {
                 <Img src={background} />
             </div>}
 
-            <div className="opacity_layer">
-                
-            </div>
+            <div className="opacity-layer"></div>
 
             <ContentWrapper>
                 <div className="heroBanner_content">
