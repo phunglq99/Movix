@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRef } from 'react';
+
+import React from 'react'; import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -31,6 +31,18 @@ const Carousel = ({ data, loading, endpoint, title }) => {
             behavior: "smooth",
         });
     }
+
+    const skItem = () => {
+        return (
+            <div className="skeletonItem">
+                <div className="posterBlock skeleton"></div>
+                <div className="textBlock">
+                    <div className="title skeleton"></div>
+                    <div className="date skeleton"></div>
+                </div>
+            </div>
+        );
+    };
 
     return (
         <div className="carousel">
@@ -86,11 +98,15 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                             )
                         })}
                     </div>
-                ) :
-                    (<div>
-
+                ) : (
+                    <div className="loadingSkeleton">
+                        {skItem()}
+                        {skItem()}
+                        {skItem()}
+                        {skItem()}
+                        {skItem()}
                     </div>
-                    )}
+                )}
             </ContentWrapper>
         </div>
     )
